@@ -8,6 +8,8 @@
 #include <arduino.h>
 #include <WiFi.h>
 
+#include "wifi.hpp"
+#include "clavier.hpp"
 
 //=========================================
 //
@@ -42,4 +44,19 @@ void setup() {
     delay(1000);
 
     Serial.println("Fin de setup");
+}
+
+
+//=========================================
+//
+//          Loop
+//
+//=========================================
+void loop() {
+
+    if (Serial.available() > 0) {
+        lireClavier();
+    }
+
+    delay (1);
 }
