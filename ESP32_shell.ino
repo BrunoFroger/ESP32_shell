@@ -1,14 +1,13 @@
 //
 //  module de test de la feather ESP32
-//  test de création d'un serveur ssh 
-//  afin de se connecter a l'esp32 en ssh 
+//  test de création d'un shell
+//  afin de tester des fonctionnalite
+//  de l'arduino connecté
 // (c) B. Froger 2020
 
 
 #include <arduino.h>
-#include <WiFi.h>
 
-#include "wifi.hpp"
 #include "clavier.hpp"
 
 //=========================================
@@ -27,7 +26,7 @@ void setup() {
         break;
         delay(10);
     }
-    delay(5000);
+    delay(2000);
     if (timeoutInitSerial != 0)
     {
         Serial.println("Serial initialized");
@@ -38,12 +37,11 @@ void setup() {
     }
 
     Serial.println("debut de setup");
-    initWifi();
-    Serial.println("Init Wifi OK");
 
-    delay(1000);
+    //delay(1000);
 
     Serial.println("Fin de setup");
+    Serial.println("ESP32_shell.ino");
 }
 
 

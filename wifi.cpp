@@ -1,7 +1,7 @@
 
 
 #include <Arduino.h>
-#include <Wifi.h>
+#include <WiFi.h>
 
 
 String ipAdress;
@@ -45,7 +45,7 @@ void scanNetworks(void){    // search for availables Wifi Networks
                 }
                 Serial.println(" => NOK");
             }
-            if (strcmp(wifiSsid,"") == 0){
+            if (strcmp(wifiSsid,"") == 0 || strcmp(wifiSsid,"0.0.0.0") == 0){
                 delay(2000);
                 Serial.println("No Wifi network found ==> rescan ......");
                 nbSsid = WiFi.scanNetworks();
@@ -91,5 +91,57 @@ void initWifi(void){    // init wifi connection
     Serial.print("http://");
     Serial.print(ipAdress);
     Serial.println("/");  //Utiliser cette URL sous Firefox de preference à Chrome
+}
+
+
+//=========================================
+//
+//          stopWifi
+//
+//=========================================
+void stopWifi(void){
+    WiFi.disconnect();
+    strcpy(wifiSsid,"");
+    ipAdress="";
+}
+
+
+//=========================================
+//
+//          statusWifi
+//
+//=========================================
+void statusWifi(void){
+    if (ipAdress != ""){
+        Serial.printf("Wifi is connected on %s ; ipAdress = ", wifiSsid);
+        Serial.println(ipAdress);
+    } else {
+        Serial.println("Wifi is disconnected");
+    }
+    WiFi.disconnect();
+    strcpy(wifiSsid,"");
+    ipAdress="";
+}
+
+
+//=========================================
+//
+//          analyseWifi
+//
+//=========================================
+void analyseWifi(String commande){
+    if (commande.equals("stop")){
+        stopWifi();
+        Serial.println("Wifi server stoped");
+    } else if (commande.equals("start")){
+        wifiServer = WiFiServer(80);
+        initWifi();
+        Serial.println("Wifi server started");
+    } else if (commande.equals("status")){
+        statusWifi();
+    } else {
+        Serial.print(commande);
+        Serial.println(" => commande inconnue");
+    }
 }
 
