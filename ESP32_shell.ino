@@ -9,6 +9,7 @@
 #include <arduino.h>
 
 #include "clavier.hpp"
+#include "variables.hpp"
 
 //=========================================
 //
