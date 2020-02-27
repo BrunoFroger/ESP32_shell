@@ -12,6 +12,19 @@ WiFiServer wifiServer(80);//Ecouter le port 80
 
 //=========================================
 //
+//          wifiHelp 
+//
+//=========================================
+void wifiHelp(){
+    Serial.println("Syntaxe des commandes wifi : ");
+    Serial.println(" wifi stop          => arret du serveur wifi");
+    Serial.println(" wifi start         => demarrage du serveur wifi");
+    Serial.println(" wifi status        => etat du serveur wifi");
+    Serial.println(" wifi rescan        => scan des reseau wifi a proximite et connexion si rencontre d'un reseau connu");
+}
+
+//=========================================
+//
 //          scanNetworks
 //
 //=========================================
@@ -54,7 +67,6 @@ void scanNetworks(void){    // search for availables Wifi Networks
     }
 }
 
-
 //=========================================
 //
 //          initWifi
@@ -93,7 +105,6 @@ void initWifi(void){    // init wifi connection
     Serial.println("/");  //Utiliser cette URL sous Firefox de preference à Chrome
 }
 
-
 //=========================================
 //
 //          stopWifi
@@ -104,7 +115,6 @@ void stopWifi(void){
     strcpy(wifiSsid,"");
     ipAdress="";
 }
-
 
 //=========================================
 //
@@ -118,11 +128,17 @@ void statusWifi(void){
     } else {
         Serial.println("Wifi is disconnected");
     }
-    WiFi.disconnect();
-    strcpy(wifiSsid,"");
-    ipAdress="";
 }
 
+//=========================================
+//
+//          rescan 
+//
+//=========================================
+void rescanWifi(void){
+    Serial.print("Rescan Wifi Networks => ");
+    initWifi();
+}
 
 //=========================================
 //
@@ -139,9 +155,13 @@ void analyseWifi(String commande){
         Serial.println("Wifi server started");
     } else if (commande.equals("status")){
         statusWifi();
+    } else if (commande.equals("rescan")){
+        rescanWifi();
     } else {
+        Serial.print("ERREUR => <wifi ");
         Serial.print(commande);
-        Serial.println(" => commande inconnue");
+        Serial.println("> => commande inconnue");
+        wifiHelp();
     }
 }
 
