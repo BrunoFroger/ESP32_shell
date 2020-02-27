@@ -10,6 +10,9 @@
 #include "wifi.hpp"
 #include "afficheur.hpp"
 #include "variables.hpp"
+#include "i2c.hpp"
+
+extern String ipAdress;
 
 #define NB_COMMANDES 10
 extern String ListeCommandes[NB_COMMANDES];

@@ -3,8 +3,8 @@
 #include <Arduino.h>
 #include <WiFi.h>
 
+#include "commandes.hpp"
 
-String ipAdress;
 char wifiSsid[25];
 char wifiPassword[50];
 WiFiClient wifiClient;
@@ -25,10 +25,10 @@ void wifiHelp(){
 
 //=========================================
 //
-//          scanNetworks
+//          wifiScanNetworks
 //
 //=========================================
-void scanNetworks(void){    // search for availables Wifi Networks
+void wifiScanNetworks(void){    // search for availables Wifi Networks
     int nbSsid = WiFi.scanNetworks();
     if (nbSsid != -1){
         Serial.print(nbSsid);
@@ -69,12 +69,12 @@ void scanNetworks(void){    // search for availables Wifi Networks
 
 //=========================================
 //
-//          initWifi
+//          wifiInit
 //
 //=========================================
-void initWifi(void){    // init wifi connection
+void wifiInit(void){    // init wifi connection
 
-    scanNetworks();
+    wifiScanNetworks();
     // Connect to WiFi network
     Serial.print("Connecting to ");
     Serial.println(wifiSsid);
@@ -107,10 +107,10 @@ void initWifi(void){    // init wifi connection
 
 //=========================================
 //
-//          stopWifi
+//          wifiStop
 //
 //=========================================
-void stopWifi(void){
+void wifiStop(void){
     WiFi.disconnect();
     strcpy(wifiSsid,"");
     ipAdress="";
@@ -137,7 +137,7 @@ void statusWifi(void){
 //=========================================
 void rescanWifi(void){
     Serial.print("Rescan Wifi Networks => ");
-    initWifi();
+    wifiInit();
 }
 
 //=========================================
@@ -147,11 +147,11 @@ void rescanWifi(void){
 //=========================================
 void analyseWifi(String commande){
     if (commande.equals("stop")){
-        stopWifi();
+        wifiStop();
         Serial.println("Wifi server stoped");
     } else if (commande.equals("start")){
         wifiServer = WiFiServer(80);
-        initWifi();
+        wifiInit();
         Serial.println("Wifi server started");
     } else if (commande.equals("status")){
         statusWifi();

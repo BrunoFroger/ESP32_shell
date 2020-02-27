@@ -6,9 +6,10 @@
 
 String ListeCommandes[NB_COMMANDES]={
     "help",  "reboot", "ifconfig", 
-    "wifi", "get", "set",
+    "wifi", "get", "set", "i2cScan"
     "variable","affiche"
 };
+String ipAdress;
 
 //=========================================
 //
@@ -60,6 +61,9 @@ void analyseCommande(String cde){
     }else if (cde.startsWith("affiche")){
         // visualise le contenu d'une variables
         analyseAfficheur(subCommand);
+    }else if (cde.startsWith("i2cscan")){
+        // visualise le contenu d'une variables
+        i2cScan();
     } else if (cde.equals("")){
         Serial.println();
     } else {
